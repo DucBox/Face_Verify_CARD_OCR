@@ -15,3 +15,5 @@ firebase_key.json
 *.JPG
 *.mp4
 *data
+
+models/
