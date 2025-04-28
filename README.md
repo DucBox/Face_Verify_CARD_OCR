@@ -54,31 +54,6 @@ streamlit run frontend/app.py
 ```
 Access the application at `http://localhost:8501`
 
-### 🔹 2. Deploy on Streamlit Cloud
-1. **Push the code to GitHub**:
-   ```bash
-   git push origin main
-   ```
-2. **Go to [Streamlit Cloud](https://share.streamlit.io/) and connect your GitHub repository.**
-3. **Add Firestore Credentials to `Secrets` on Streamlit Cloud**:
-   - Open **App settings** → **Secrets**
-   - Add the following variables:
-     ```ini
-     [firebase]
-     type = "service_account"
-     project_id = "your-project-id"
-     private_key_id = "your-private-key-id"
-     private_key = "-----BEGIN PRIVATE KEY-----\nMIIEv..."
-     ```
-4. **Deploy and run the application!** 🚀
-
----
-
-## 🖥️ Web UI
-Below is a preview of the application UI:
-
-![Web UI](WebUI.png)
-
 ---
 
 ## 📜 License & Author
