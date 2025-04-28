@@ -1,7 +1,7 @@
 # ===== Base Python Image =====
 FROM python:3.9-slim
 
-# ===== Install OS dependencies (early để cache tốt hơn) =====
+# ===== Install OS dependencies =====
 RUN apt-get update && apt-get install -y \
     build-essential \
     libglib2.0-0 \
@@ -11,6 +11,9 @@ RUN apt-get update && apt-get install -y \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
+# ===== Install Python dependencies early =====
+RUN pip install --upgrade pip
+RUN pip install gdown
 
 # ===== Set working directory =====
 WORKDIR /app
@@ -18,23 +21,23 @@ WORKDIR /app
 # ===== Copy code =====
 COPY . /app
 
-RUN pip install gdown
+# ===== Create models folder =====
+RUN mkdir -p /app/models
 
-RUN gdown --id 1APfWKSS-lHpI5yERsxD2_FZSntGwUqWT -O /app/models/card_detect.pt && \
-    gdown --id 1cMNwpR9m4QAwv2lK2QXZvGaqgTg904lh -O /app/models/face_card_detect.pt && \
-    gdown --id 1UUXsI_Y1BAiPQ3wuk2gyFfMWhzeLbyJy -O /app/models/head_detect.pt && \
-    gdown --id 1xWOiSHxe_QBzdzYmQ0IM9wWTQU7A5c4n -O /app/models/text_recog.pt
+# ===== Copy script download model vào container =====
+COPY download_models.py /app/download_models.py
 
+# ===== Download models =====
+RUN python3 download_models.py
 
-# ===== Debug xem bên trong container đã có những file nào (tùy chọn, có thể giữ để debug) =====
-RUN ls -R /app
+# ===== Debug xem models tải ok chưa =====
+RUN ls -lh /app/models/
 
-# ===== Install Python packages (cached!) =====
-RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
+# ===== Install project Python packages =====
+RUN pip install -r requirements.txt
 
 # ===== Expose port =====
 EXPOSE 8501
 
-# ===== Set entrypoint =====
+# ===== Run app =====
 CMD ["python3", "-m", "streamlit", "run", "frontend/app.py"]
