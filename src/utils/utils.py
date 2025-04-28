@@ -3,9 +3,10 @@ import numpy as np
 import torch
 from ultralytics import YOLO
 from typing import List, Tuple, Dict
-
+import streamlit as st
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
+@st.cache_resource
 def load_YOLO(model_path: str) -> YOLO:
     model = YOLO(model_path).to(device)
     return model

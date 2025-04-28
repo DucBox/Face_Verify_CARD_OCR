@@ -4,7 +4,7 @@ from src.utils.image_processing import read_image, crop_image
 from src.text_processing.text_detection import detect_text  
 from src.text_processing.text_recognition import recog_text, load_vietocr_model
 
-def card2text(transformed_card_image: np.ndarray, vietocr_model) -> dict:
+def card2text(transformed_card_image: np.ndarray, vietocr_model, text_detect_model) -> dict:
     """
     Full pipeline: From card image path -> detect text regions -> recognize text.
 
@@ -15,7 +15,7 @@ def card2text(transformed_card_image: np.ndarray, vietocr_model) -> dict:
         dict: Extracted text fields {label: text}.
     """
     print("[INFO] Detecting text regions ...")
-    text_boxes = detect_text(transformed_card_image)
+    text_boxes = detect_text(transformed_card_image, text_detect_model)
 
     if not text_boxes:
         print("❌ No valid text regions detected.")

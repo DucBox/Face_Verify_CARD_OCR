@@ -11,11 +11,18 @@ from src.retrieval.face_retrieval_verify import get_user_embeddings, verify_face
 from src.mini_pipeline.card2text_pipeline import card2text
 from src.utils.image_processing import read_image
 from src.text_processing.text_recognition import load_vietocr_model
+from src.utils.utils import load_YOLO
+from src.utils.config import CARD_DETECT_MODEL , FACE_CARD_DETECT_MODEL , HEAD_DETECT_MODEL , TEXT_DETECT_MODEL, TEXT_RECOG_MODEL
 
 # ==================== PAGE CONFIG ====================
 st.set_page_config(page_title="🪪 Card Face Verification & OCR", layout="centered")
 
 vietocr_model = load_vietocr_model()
+
+card_detect_model = load_YOLO(CARD_DETECT_MODEL)
+face_card_detect_model = load_YOLO(FACE_CARD_DETECT_MODEL)
+head_detect_model = load_YOLO(HEAD_DETECT_MODEL)
+text_detect_model = load_YOLO(TEXT_DETECT_MODEL)
 
 # ==================== INITIAL SESSION STATES ====================
 if "user_name" not in st.session_state:
@@ -164,7 +171,7 @@ if st.session_state.user_enrolled:
 
             # Step 1: Detecting
             status_placeholder.markdown("🔍 Detecting Card...")
-            transformed_card = card_process(card_path)
+            transformed_card = card_process(card_path, card_detect_model)
 
             # Step 2: Transforming
             status_placeholder.markdown("🛠 Transforming Card...")
@@ -172,7 +179,7 @@ if st.session_state.user_enrolled:
 
             # Step 3: Verifying Face
             status_placeholder.markdown("🛡️ Verifying Face...")
-            face_card_embedding = card2face_embedding(transformed_card)
+            face_card_embedding = card2face_embedding(transformed_card, face_card_detect_model, head_detect_model)
             db_embeddings= get_user_embeddings(st.session_state.user_name)
             verified = verify_face(face_card_embedding, db_embeddings)
 
@@ -181,7 +188,7 @@ if st.session_state.user_enrolled:
 
                 # Step 4: Extracting Text
                 status_placeholder.markdown("📝 Extracting Text...")
-                extracted_text = card2text(transformed_card, vietocr_model)
+                extracted_text = card2text(transformed_card, vietocr_model, text_detect_model)
 
                 # Step 5: Completed
                 status_placeholder.markdown("✅ Completed! See extracted text below.")

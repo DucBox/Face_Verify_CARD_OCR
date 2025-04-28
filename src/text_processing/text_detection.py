@@ -12,9 +12,7 @@ def filter_text_boxes(detections: Dict[str, tuple]) -> Dict[str, tuple]:
     print(f"[INFO] Filtered text fields: {filtered_boxes}")
     return filtered_boxes
 
-def detect_text(image: np.ndarray, model_path: str = TEXT_DETECT_MODEL):
-    
-    model = load_YOLO(TEXT_DETECT_MODEL)
+def detect_text(image: np.ndarray, model):
     
     raw_results = detect_objects(image, model)
     

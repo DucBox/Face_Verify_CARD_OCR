@@ -4,7 +4,7 @@ from src.utils.utils import load_YOLO
 from src.utils.config import CARD_DETECT_MODEL
 from src.utils.utils import detect_objects, apply_nms, load_YOLO
 
-def detect_card(image: np.ndarray, model_path = CARD_DETECT_MODEL) -> dict:
+def detect_card(image: np.ndarray, model) -> dict:
     """
     Detect 4 corners of the card using YOLO model.
 
@@ -15,7 +15,6 @@ def detect_card(image: np.ndarray, model_path = CARD_DETECT_MODEL) -> dict:
     Returns:
         dict: Dictionary containing 4 corners with their (x, y) coordinates.
     """
-    model = load_YOLO(model_path)
 
     raw_detections = detect_objects(image, model)
 
