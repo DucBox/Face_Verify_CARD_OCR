@@ -18,6 +18,9 @@ WORKDIR /app
 # ===== Copy code =====
 COPY . /app
 
+# ===== Create models folder =====
+RUN mkdir -p /app/models
+
 # ===== Download model files =====
 RUN wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1APfWKSS-lHpI5yERsxD2_FZSntGwUqWT' -O /app/models/card_detect.pt
 RUN wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1cMNwpR9m4QAwv2lK2QXZvGaqgTg904lh' -O /app/models/face_card_detect.pt
