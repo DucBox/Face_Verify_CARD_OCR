@@ -1,0 +1,17 @@
+# Ignore Python cache
+__pycache__/
+*.pyc
+.DS_Store
+
+# VSCode
+.vscode/
+
+# Environment & secrets
+.env
+*.env
+src/utils/firebase_key.json
+firebase_key.json
+
+*.JPG
+*.mp4
+*data

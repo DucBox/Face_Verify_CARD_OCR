@@ -1,0 +1,17 @@
+streamlit
+opencv-python
+numpy
+Pillow
+matplotlib
+torch
+torchvision
+ultralytics
+pillow-heif
+firebase-admin
+timm
+python-dateutil
+tqdm
+git+https://github.com/pbcquoc/vietocr.git
+scikit-learn
+facenet-pytorch
+faiss-cpu
