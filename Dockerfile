@@ -7,6 +7,9 @@ WORKDIR /app
 # ==== Copy code ====
 COPY . /app
 
+# ==== Debug xem bên trong container đã có những file nào ====
+RUN ls -R /app
+
 # ===== Install OS dependencies =====
 RUN apt-get update && apt-get install -y \
     build-essential \
