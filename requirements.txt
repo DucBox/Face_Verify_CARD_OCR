@@ -16,3 +16,4 @@ scikit-learn
 facenet-pytorch
 faiss-cpu
 dotenv
+numpy==1.26.4
