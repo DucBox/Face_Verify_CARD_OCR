@@ -12,7 +12,7 @@ def load_vietocr_model(model_path: str = TEXT_RECOG_MODEL) -> Predictor:
     """
     config = Cfg.load_config_from_name('vgg_transformer')
     # config['weights'] = str(model_path)
-    config['device'] = 'gpu'  
+    config['device'] = 'cuda'  
 
     model = Predictor(config)
     return model
